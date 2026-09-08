@@ -1,0 +1,2 @@
+import { Link } from 'react-router-dom';
+export default function Home(){return <section className="hero"><p className="eyebrow">AI + NLP + Cybersecurity</p><h1>Detect suspicious messages before you act.</h1><p>ScamShield AI analyzes scam-like language, risk signals and URLs to provide an understandable safety assessment.</p><Link className="button" to="/scanner">Analyze a message</Link></section>}

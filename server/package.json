@@ -1,0 +1,1 @@
+{"name":"scamshield-server","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"nodemon src/server.js","start":"node src/server.js"},"dependencies":{"cors":"latest","dotenv":"latest","express":"latest","mongoose":"latest","axios":"latest","bcryptjs":"latest","jsonwebtoken":"latest"},"devDependencies":{"nodemon":"latest"}}

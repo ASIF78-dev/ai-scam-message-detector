@@ -1,0 +1,14 @@
+{
+    "accuracy": 0.963,
+    "precision": 0.9375,
+    "recall": 1.0,
+    "f1_score": 0.9677,
+    "training_samples": 108,
+    "testing_samples": 27,
+    "model": "Logistic Regression",
+    "feature_extraction": "TF-IDF",
+    "ngram_range": [
+        1,
+        2
+    ]
+}
