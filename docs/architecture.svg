@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="850" viewBox="0 0 1400 850">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#333"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="850" fill="#f7f8fc"/>
+  <text x="700" y="55" text-anchor="middle" font-family="Arial" font-size="30" font-weight="bold" fill="#202124">
+    AI Scam Message Detector — System Architecture
+  </text>
+  <text x="700" y="85" text-anchor="middle" font-family="Arial" font-size="15" fill="#666">
+    React + Node/Express + FastAPI + TF-IDF + Logistic Regression + MongoDB
+  </text>
+
+  <!-- User -->
+  <rect x="520" y="115" width="360" height="75" rx="14" fill="#e8f0fe" stroke="#4a78c2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="145" text-anchor="middle" font-family="Arial" font-size="21" font-weight="bold">User</text>
+  <text x="700" y="170" text-anchor="middle" font-family="Arial" font-size="14">Enters SMS / Email / Message</text>
+
+  <!-- Frontend -->
+  <rect x="480" y="225" width="440" height="90" rx="14" fill="#e8f5e9" stroke="#4d9454" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="260" text-anchor="middle" font-family="Arial" font-size="21" font-weight="bold">React Frontend</text>
+  <text x="700" y="285" text-anchor="middle" font-family="Arial" font-size="14">UI • Input Validation • Result Display</text>
+
+  <!-- Backend -->
+  <rect x="480" y="350" width="440" height="90" rx="14" fill="#fff4df" stroke="#c98a22" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="385" text-anchor="middle" font-family="Arial" font-size="21" font-weight="bold">Node.js + Express Backend</text>
+  <text x="700" y="410" text-anchor="middle" font-family="Arial" font-size="14">REST API • Authentication • Request Routing</text>
+
+  <!-- AI -->
+  <rect x="450" y="475" width="500" height="120" rx="14" fill="#f3e8ff" stroke="#8b55b5" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="510" text-anchor="middle" font-family="Arial" font-size="21" font-weight="bold">Python / FastAPI AI Service</text>
+  <text x="700" y="537" text-anchor="middle" font-family="Arial" font-size="14">Text Preprocessing → TF-IDF Vectorization</text>
+  <text x="700" y="562" text-anchor="middle" font-family="Arial" font-size="14">→ Logistic Regression → Scam / Safe Prediction</text>
+
+  <!-- Model -->
+  <rect x="85" y="485" width="280" height="105" rx="14" fill="#fdecec" stroke="#c45b5b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="225" y="520" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Trained ML Model</text>
+  <text x="225" y="548" text-anchor="middle" font-family="Arial" font-size="14">TF-IDF + Logistic Regression</text>
+  <text x="225" y="573" text-anchor="middle" font-family="Arial" font-size="14">Saved Model (.pkl)</text>
+
+  <!-- Training -->
+  <rect x="85" y="650" width="280" height="90" rx="14" fill="#eaf7f7" stroke="#4b9999" stroke-width="2" filter="url(#shadow)"/>
+  <text x="225" y="685" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Training Pipeline</text>
+  <text x="225" y="712" text-anchor="middle" font-family="Arial" font-size="14">Dataset → Clean → Train → Evaluate</text>
+
+  <!-- MongoDB -->
+  <rect x="1030" y="350" width="280" height="105" rx="14" fill="#eaf4ea" stroke="#5b985b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1170" y="388" text-anchor="middle" font-family="Arial" font-size="21" font-weight="bold">MongoDB</text>
+  <text x="1170" y="416" text-anchor="middle" font-family="Arial" font-size="14">Users • Scan History</text>
+  <text x="1170" y="438" text-anchor="middle" font-family="Arial" font-size="14">Predictions / Logs</text>
+
+  <!-- Response -->
+  <rect x="480" y="650" width="440" height="90" rx="14" fill="#e8f0fe" stroke="#4a78c2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="685" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold">Prediction Response</text>
+  <text x="700" y="713" text-anchor="middle" font-family="Arial" font-size="14">Label: SCAM / SAFE • Confidence Score</text>
+
+  <!-- Arrows -->
+  <line x1="700" y1="190" x2="700" y2="225" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="315" x2="700" y2="350" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="440" x2="700" y2="475" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="450" y1="535" x2="365" y2="535" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="225" y1="650" x2="225" y2="590" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="920" y1="395" x2="1030" y2="395" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="595" x2="700" y2="650" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M480 695 C350 695, 300 620, 300 315 L480 315" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+
+  <text x="385" y="684" font-family="Arial" font-size="13" fill="#555">Result sent to frontend</text>
+  <text x="935" y="382" font-family="Arial" font-size="13" fill="#555">Store data</text>
+</svg>

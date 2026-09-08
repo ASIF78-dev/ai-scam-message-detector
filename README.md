@@ -64,7 +64,11 @@ SCAM / SAFE + confidence
 Backend → frontend → user
 ```
 
-See the detailed diagram in ['ai_scam_message_detector_architecture.svg']
+### System diagram
+
+![AI Scam Message Detector system architecture](docs/architecture.svg)
+
+[Open the architecture diagram](docs/architecture.svg)
 
 
 ## Project structure
