@@ -1,4 +1,4 @@
-#  ScamShield AI
+# ScamShield AI
 
 > A full-stack machine-learning application that analyses SMS, email, and chat messages and predicts whether a message is **SCAM** or **SAFE**.
 
@@ -6,17 +6,23 @@ ScamShield Ai demonstrates how a text-classification model can be integrated int
 
 > **Project note:** The routes, folder structure, and setup commands below document the current recommended design. Confirm they match the final implementation before deployment or submission.
 
+
+
 ## Tech stack
 
-| Area | Technologies |
-| --- | --- |
-| Frontend | React, Vite, JavaScript, CSS |
-| Backend | Node.js, Express.js |
-| AI service | Python, FastAPI |
+
+| Area             | Technologies                              |
+| ---------------- | ----------------------------------------- |
+| Frontend         | React, Vite, JavaScript, CSS              |
+| Backend          | Node.js, Express.js                       |
+| AI service       | Python, FastAPI                           |
 | Machine learning | scikit-learn, TF-IDF, Logistic Regression |
-| Database | MongoDB |
-| Communication | REST / JSON |
-| Development | VS Code, Git, GitHub |
+| Database         | MongoDB                                   |
+| Communication    | REST / JSON                               |
+| Development      | VS Code, Git, GitHub                      |
+
+
+
 
 ## What it does
 
@@ -32,37 +38,41 @@ Users can submit suspicious messages for analysis. The application passes the te
 - Store users, scan history, and prediction logs in MongoDB.
 - Keep the frontend, backend, and AI service modular.
 
+
+
 ## Architecture
 
 ```text
-User
-  │
-  ▼
-React + Vite frontend
-  │
-  ▼
-Node.js + Express backend
-  │
-  ├──────────────► MongoDB
-  │
-  ▼
-Python + FastAPI AI service
-  │
-  ▼
-Text preprocessing
-  │
-  ▼
-TF-IDF vectorizer
-  │
-  ▼
-Logistic Regression
-  │
-  ▼
-SCAM / SAFE + confidence
-  │
-  ▼
-Backend → frontend → user
+                 User Message
+                      │
+                      ▼
+              Text Preprocessing
+                      │
+          ┌───────────┴───────────┐
+          ▼                       ▼
+    ML Classifier            Rule Engine
+  TF-IDF + Logistic       URL + urgency +
+     Regression           OTP + payment +
+          │                impersonation
+          └───────────┬───────────┘
+                      │
+                      ▼
+                Decision Layer
+                      │
+       ┌──────────────┼──────────────┐
+       ▼              ▼              ▼
+   Legitimate     Suspicious        Scam
+  (0% – 34%)     (35% – 69%)    (70% – 100%)
+       │              │              │
+       ▼              ▼              ▼
+   Low Risk      Medium Risk     High Risk
+   Safe phase     Caution phase   Danger phase
+       │
+       ▼
+Backend → MongoDB & Frontend → User
 ```
+
+
 
 ### System diagram
 
@@ -70,17 +80,19 @@ Backend → frontend → user
 
 [Open the architecture diagram](docs/architecture.svg)
 
-
 ## Project structure
 
 ```text
-ai-scam-message-detector/
-├── frontend/                 # React + Vite client
-├── backend/                  # Node.js + Express API
+scamshield-ai/
+├── client/                   # React + Vite frontend
+├── server/                   # Node.js + Express API
 ├── ai-service/               # Python + FastAPI ML service
 │   ├── app/
-│   ├── models/
+│   │   ├── __init__.py
+│   │   └── main.py
+│   ├── model/
 │   ├── dataset/
+│   ├── tests/
 │   ├── train.py
 │   └── requirements.txt
 ├── docs/
@@ -91,7 +103,10 @@ ai-scam-message-detector/
 ```
 
 
+
 ## Getting started
+
+
 
 ### Prerequisites
 
@@ -99,14 +114,18 @@ ai-scam-message-detector/
 - Python 3 and pip
 - MongoDB
 
+
+
 ### 1. Clone the repository
 
 Replace `YOUR_USERNAME` with your GitHub username.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-scam-message-detector.git
-cd ai-scam-message-detector
+git clone https://github.com/YOUR_USERNAME/scamshield-ai.git
+cd scamshield-ai
 ```
+
+
 
 ### 2. Start the AI service
 
@@ -135,51 +154,67 @@ The AI API runs at:
 http://localhost:8000
 ```
 
+
+
 ### 3. Start the backend
 
 Open another terminal and run:
 
 ```bash
-cd backend
+cd server
 npm install
 npm run dev
 ```
 
-Example backend URL:
-
-```text
-http://localhost:5000
-```
-
-Create `backend/.env`:
+Create `server/.env`:
 
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://127.0.0.1:27017/scamshield
-AI_SERVICE_URL=http://localhost:8000
+JWT_SECRET=your_secret_key_here
+AI_SERVICE_URL=http://127.0.0.1:8000
+CLIENT_URL=http://localhost:5173
 ```
+
+Backend URL:
+
+```text
+http://localhost:5001
+```
+
+
 
 ### 4. Start the frontend
 
 Open another terminal and run:
 
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev
 ```
 
-Vite normally provides a local URL similar to:
+Create `client/.env`:
+
+```env
+VITE_API_URL=http://localhost:5001/api
+```
+
+Vite client runs at:
 
 ```text
 http://localhost:5173
 ```
+
+
 
 ## API reference
 
 The routes below define the recommended contract between the frontend, backend, and AI service. Adjust them to match the final implementation if necessary.
 
 ### AI service
+
+
 
 #### Health check
 
@@ -194,6 +229,8 @@ Example response:
   "status": "ok"
 }
 ```
+
+
 
 #### Predict a message
 
@@ -221,13 +258,68 @@ Example response:
 
 > The example confidence value illustrates the response format; it is not a published model-performance metric.
 
+
+
 ### Backend API
 
-#### Analyse a message
+
+
+#### Authentication
+
+
+
+##### Register a new user
 
 ```http
-POST /api/messages/analyze
+POST /api/auth/register
 Content-Type: application/json
+```
+
+```json
+{
+  "name": "Alex Johnson",
+  "email": "alex@example.com",
+  "password": "password123"
+}
+```
+
+
+
+##### User login
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+```
+
+```json
+{
+  "email": "alex@example.com",
+  "password": "password123"
+}
+```
+
+
+
+##### Get current user profile
+
+```http
+GET /api/auth/me
+Authorization: Bearer <jwt_token>
+```
+
+
+
+#### Message Scanning & History
+
+
+
+##### Analyse a message (public or authenticated)
+
+```http
+POST /api/scans/analyze
+Content-Type: application/json
+Authorization: Bearer <jwt_token> (optional)
 ```
 
 Example request:
@@ -242,18 +334,38 @@ Example response:
 
 ```json
 {
-  "prediction": "SCAM",
-  "confidence": 0.95
+  "prediction": "scam",
+  "riskScore": 75.4,
+  "riskLevel": "HIGH",
+  "confidence": 75.4,
+  "category": "lottery_prize_scam",
+  "patterns": ["urgency", "prize_claim"],
+  "extractedUrls": [],
+  "recommendation": "Do not click suspicious links or share sensitive information.",
+  "modelVersion": "tfidf-logistic-regression-v1.0",
+  "scanId": "66dfb37c89..."
 }
 ```
 
-#### Scan history
+
+
+##### Scan history (authenticated)
 
 ```http
-GET /api/messages/history
+GET /api/scans/history?page=1&limit=20
+Authorization: Bearer <jwt_token>
 ```
 
-Returns previously analysed messages for the authenticated user.
+Returns previously analysed messages for the authenticated user with pagination.
+
+##### Delete a scan (authenticated)
+
+```http
+DELETE /api/scans/:id
+Authorization: Bearer <jwt_token>
+```
+
+
 
 ## Machine-learning pipeline
 
@@ -283,6 +395,8 @@ Recommended evaluation metrics:
 - F1-score
 - Confusion matrix
 
+
+
 ## Security notes
 
 Never commit:
@@ -306,6 +420,8 @@ Backend  → API/integration tests
 AI       → model/API prediction tests
 ```
 
+
+
 ## Future improvements
 
 - Transformer/BERT-based classification
@@ -317,6 +433,8 @@ AI       → model/API prediction tests
 - User feedback for model improvement
 - Admin dashboard and analytics
 
+
+
 ## Academic project
 
 - Full-stack development
@@ -325,6 +443,8 @@ AI       → model/API prediction tests
 - Natural language processing
 - Database integration
 - Software architecture
+
+
 
 ## License
 

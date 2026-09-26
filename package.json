@@ -1,0 +1,21 @@
+{
+  "name": "scamshield-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack AI scam message detector",
+  "scripts": {
+    "dev": "concurrently -n \"server,client\" -c \"blue,green\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:all": "concurrently -n \"ai,server,client\" -c \"magenta,blue,green\" \"npm run dev:ai\" \"npm run dev:server\" \"npm run dev:client\"",
+    "deviall": "npm run dev:all",
+    "dev-all": "npm run dev:all",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "dev:ai": "cd ai-service && ./venv/bin/uvicorn app.main:app --reload --port 8000",
+    "db": "mongod --dbpath \"$HOME/data/db\"",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
