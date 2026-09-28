@@ -226,7 +226,34 @@ describe('Backend API Security, CORS, Helmet, and Input Validation Suite', () =>
   });
 
   // ==========================================
-  // 5. API Error Handling & 404 Tests
+  // 5. Login Rate Limiting
+  // ==========================================
+  describe('Login Rate Limiting', () => {
+    it('should return 429 after too many failed login attempts', async () => {
+      const payload = {
+        email: 'rate-limit-login@example.com',
+        password: 'wrong-password',
+      };
+
+      let lastRes;
+      for (let i = 0; i < 6; i += 1) {
+        lastRes = await fetch(`${baseUrl}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      }
+
+      assert.equal(lastRes.status, 429);
+      const data = await lastRes.json();
+      assert.equal(data.error, true);
+      assert.equal(data.code, 'LOGIN_RATE_LIMIT_EXCEEDED');
+      assert.ok(data.message.toLowerCase().includes('too many login'));
+    });
+  });
+
+  // ==========================================
+  // 6. API Error Handling & 404 Tests
   // ==========================================
   describe('API Error Handling & 404 Fallback', () => {
     it('should return standardized JSON 404 on undefined routes', async () => {

@@ -1,3 +1,9 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "python.defaultInterpreterPath": "${workspaceFolder}/ai-service/venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "terminal.integrated.env.osx": {
+        "PATH": "${workspaceFolder}/ai-service/venv/bin:${env:PATH}",
+        "PYTHONPATH": "${workspaceFolder}/ai-service"
+    }
 }

@@ -29,8 +29,29 @@ vectorizer = classifier.vectorizer
 
 
 # ============================================================
-# HEALTH CHECK ENDPOINT
+# ROOT & HEALTH
 # ============================================================
+@app.get("/")
+def root():
+    return {
+        "status": "ok",
+        "service": "scamshield-ai",
+        "version": app.version,
+        "docs": "/docs",
+        "health": "/health",
+        "predict": "POST /predict",
+    }
+
+
+@app.get("/json/version")
+def json_version():
+    return {
+        "status": "ok",
+        "service": "scamshield-ai",
+        "version": app.version,
+    }
+
+
 @app.get("/health")
 def health():
     return {

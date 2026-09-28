@@ -114,6 +114,21 @@ export const authLimiter = rateLimit({
   },
 });
 
+export const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5, // 5 login attempts per 15 min per IP
+  skipSuccessfulRequests: true,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(429).json({
+      error: true,
+      code: 'LOGIN_RATE_LIMIT_EXCEEDED',
+      message: 'Too many login attempts. Please try again after 15 minutes.',
+    });
+  },
+});
+
 export const scanLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 30, // 30 scans per minute per IP
@@ -154,6 +169,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+app.post('/api/auth/login', loginLimiter);
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/scans', scanLimiter, scanRoutes);
 app.use('/api/messages', scanLimiter, scanRoutes);
